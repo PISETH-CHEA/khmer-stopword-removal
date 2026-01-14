@@ -1,5 +1,6 @@
 import sys
 import os
+from collections import Counter
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -31,6 +32,22 @@ class KhmerStopwordRemover:
         removed = len(original_tokens) - len(filtered_tokens)
         ratio = removed / len(original_tokens) * 100
         return removed, ratio
+    
+    def Frequency(self, tokens):
+        # Count the frequency of each token
+        token_counts = Counter(tokens)
+        return dict(token_counts)
+
+    def linguistic_features(self, tokens):
+        features = {
+            'total_tokens': len(tokens),
+            'unique_tokens': len(set(tokens)),
+        }
+        return features
+
+    def segmented_text(self, text):
+        normalized = normalize_text(text)
+        return self.segmenter.segment(normalized)
 
 
 def main():
@@ -54,9 +71,15 @@ def main():
         tokens = remover.segmenter.segment(normalize_text(text))
         filtered = remover.remove_stopwords(text)
         removed, ratio = remover.get_stats(tokens, filtered)
-
+        frequency = remover.Frequency(tokens)
+        linguistic_ = remover.linguistic_features(tokens)
+        segmented_ = remover.segmented_text(text)
+        
         print(f"Tokens before: {len(tokens)}")
         print(f"Tokens after: {len(filtered)}")
+        print(f"frequency   : {frequency}")
+        print(f"linguistic   : {linguistic_}")
+        print(f"Segmented Text: {' | '.join(segmented_)}")
         print(f"Removed: {removed} ({ratio:.1f}%)")
         print(
             f"Result: {' | '.join(filtered[:10])}{'...' if len(filtered) > 10 else ''}\n"

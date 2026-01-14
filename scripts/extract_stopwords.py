@@ -7,9 +7,8 @@ from src.stopword_detection.frequency_analyzer import FrequencyAnalyzer
 from src.stopword_detection.linguistic_rules import LinguisticRules
 import yaml
 
-
 def main():
-    with open("config/config.yaml", "r") as f:
+    with open("D:/1_ITC/ITC-5th-YEAR/IWR/TP/Final_Project/khmer-stopword-removal/config/config.yaml", "r") as f:
         config = yaml.safe_load(f)
 
     segmented_dir = config["data_paths"]["segmented_dir"]

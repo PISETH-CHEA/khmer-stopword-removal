@@ -9,9 +9,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
-
 class ImpactEvaluator:
-    def __init__(self, config_path="config/config.yaml"):
+    def __init__(self, config_path= r"config\config.yaml"):
         with open(config_path, "r") as f:
             self.config = yaml.safe_load(f)
         self.segmented_dir = self.config["data_paths"]["segmented_dir"]
